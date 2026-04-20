@@ -1,0 +1,21 @@
+{
+  "generated_at": "2026-04-20T00:00:00+00:00",
+  "lookback_hours": 36,
+  "stats": {
+    "total_items": 0,
+    "total_sources": 0,
+    "raw_feed_items_kept": 0
+  },
+  "sections": [
+    {
+      "id": "business",
+      "title": "Business",
+      "items": []
+    },
+    {
+      "id": "technology",
+      "title": "Technology",
+      "items": []
+    }
+  ]
+}

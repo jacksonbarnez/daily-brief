@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="description" content="A clean daily business and technology news digest." />
+    <title>Daily Brief</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Daily Brief</p>
+          <h1>Business and technology, in under five minutes.</h1>
+          <p class="subtext">
+            Fresh headlines from reputable outlets, cleaned up into one simple daily digest.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <button id="installButton" class="button secondary hidden">Install app</button>
+          <button id="refreshButton" class="button">Refresh</button>
+        </div>
+      </header>
+
+      <section class="status-grid">
+        <article class="status-card">
+          <span class="label">Last updated</span>
+          <strong id="updatedAt">Loading…</strong>
+        </article>
+        <article class="status-card">
+          <span class="label">Articles selected</span>
+          <strong id="articleCount">—</strong>
+        </article>
+        <article class="status-card">
+          <span class="label">Sources used</span>
+          <strong id="sourceCount">—</strong>
+        </article>
+      </section>
+
+      <section class="toolbar">
+        <div class="chip-row" id="filters">
+          <button class="chip active" data-filter="all">All</button>
+          <button class="chip" data-filter="business">Business</button>
+          <button class="chip" data-filter="technology">Technology</button>
+        </div>
+        <a
+          class="text-link"
+          href="https://ntfy.sh/app"
+          target="_blank"
+          rel="noreferrer"
+          >Open notifications app</a
+        >
+      </section>
+
+      <main id="content" class="content-grid" aria-live="polite">
+        <section class="loading-card">
+          <p>Loading today’s digest…</p>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>
+          Some outlets only expose headlines, excerpts, or subscriber-only article pages. This app stays on the safe side by using public feeds and links back to original stories.
+        </p>
+      </footer>
+    </div>
+
+    <template id="sectionTemplate">
+      <section class="digest-section">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow section-eyebrow"></p>
+            <h2></h2>
+          </div>
+        </div>
+        <div class="cards"></div>
+      </section>
+    </template>
+
+    <template id="cardTemplate">
+      <article class="news-card">
+        <div class="news-meta">
+          <span class="source-badge"></span>
+          <time></time>
+        </div>
+        <h3></h3>
+        <p class="summary"></p>
+        <div class="card-footer">
+          <span class="category-pill"></span>
+          <a class="read-link" target="_blank" rel="noreferrer">Read article</a>
+        </div>
+      </article>
+    </template>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>

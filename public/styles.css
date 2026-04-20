@@ -1,0 +1,278 @@
+:root {
+  color-scheme: dark;
+  --bg: #020617;
+  --panel: #0f172a;
+  --panel-soft: rgba(15, 23, 42, 0.78);
+  --line: rgba(148, 163, 184, 0.18);
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #60a5fa;
+  --accent-soft: rgba(96, 165, 250, 0.16);
+  --success: #22c55e;
+  --shadow: 0 18px 50px rgba(2, 6, 23, 0.35);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(59, 130, 246, 0.22), transparent 30%),
+    radial-gradient(circle at top left, rgba(34, 197, 94, 0.14), transparent 24%),
+    var(--bg);
+  color: var(--text);
+}
+
+button,
+a {
+  font: inherit;
+}
+
+.app-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 20px 48px;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.82));
+  box-shadow: var(--shadow);
+}
+
+.hero h1 {
+  margin: 0 0 10px;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.05;
+  max-width: 720px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.subtext {
+  margin: 0;
+  color: var(--muted);
+  max-width: 620px;
+  line-height: 1.6;
+}
+
+.hero-actions,
+.toolbar,
+.chip-row,
+.news-meta,
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-actions {
+  align-self: flex-start;
+  flex-wrap: wrap;
+}
+
+.button {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.25);
+}
+
+.button.secondary {
+  background: var(--accent-soft);
+  color: var(--text);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  box-shadow: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.status-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.status-card,
+.loading-card,
+.digest-section,
+.news-card {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--panel-soft);
+  backdrop-filter: blur(12px);
+}
+
+.status-card {
+  padding: 18px;
+}
+
+.label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin-bottom: 10px;
+}
+
+.toolbar {
+  justify-content: space-between;
+  margin: 22px 0 16px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.chip.active {
+  background: var(--accent-soft);
+  border-color: rgba(96, 165, 250, 0.35);
+}
+
+.text-link,
+.read-link {
+  color: #bfdbfe;
+  text-decoration: none;
+}
+
+.text-link:hover,
+.read-link:hover {
+  text-decoration: underline;
+}
+
+.content-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.loading-card {
+  padding: 26px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.digest-section {
+  padding: 20px;
+}
+
+.section-header {
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.section-eyebrow {
+  margin-bottom: 6px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.news-card {
+  padding: 18px;
+}
+
+.news-card h3 {
+  margin: 12px 0;
+  font-size: 1.12rem;
+  line-height: 1.35;
+}
+
+.news-meta {
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.source-badge,
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.12);
+  border: 1px solid var(--line);
+}
+
+.summary {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.card-footer {
+  justify-content: space-between;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.category-pill {
+  background: rgba(34, 197, 94, 0.08);
+  color: #bbf7d0;
+  border-color: rgba(34, 197, 94, 0.18);
+}
+
+.footer {
+  margin-top: 20px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .status-grid,
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    padding-inline: 14px;
+  }
+
+  .hero,
+  .digest-section,
+  .news-card,
+  .status-card {
+    border-radius: 20px;
+  }
+
+  .hero {
+    padding: 22px;
+  }
+}

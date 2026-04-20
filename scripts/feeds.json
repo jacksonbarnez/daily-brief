@@ -1,0 +1,38 @@
+[
+  {
+    "name": "The New York Times",
+    "url": "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml",
+    "section": "business",
+    "weight": 1.0
+  },
+  {
+    "name": "The New York Times",
+    "url": "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml",
+    "section": "technology",
+    "weight": 1.0
+  },
+  {
+    "name": "The Wall Street Journal",
+    "url": "https://feeds.a.dj.com/rss/RSSWSJD.xml",
+    "section": "business",
+    "weight": 1.0
+  },
+  {
+    "name": "TechCrunch",
+    "url": "https://techcrunch.com/feed/",
+    "section": "technology",
+    "weight": 0.95
+  },
+  {
+    "name": "Ars Technica",
+    "url": "https://feeds.arstechnica.com/arstechnica/index",
+    "section": "technology",
+    "weight": 0.92
+  },
+  {
+    "name": "The Verge",
+    "url": "https://www.theverge.com/rss/index.xml",
+    "section": "technology",
+    "weight": 0.9
+  }
+]
