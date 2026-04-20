@@ -1,0 +1,96 @@
+name: Daily Brief
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '5 12 * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily-brief-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python packages
+        run: pip install feedparser
+
+      - name: Build digest files
+        run: python scripts/build_digest.py --feeds scripts/feeds.json --public public --out dist
+
+      - name: Send email through Google Apps Script
+        if: ${{ secrets.MAILER_WEBHOOK_URL != '' && secrets.MAILER_TOKEN != '' }}
+        env:
+          MAILER_WEBHOOK_URL: ${{ secrets.MAILER_WEBHOOK_URL }}
+          MAILER_TOKEN: ${{ secrets.MAILER_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          payload = json.loads(open('dist/data/mail.json', encoding='utf-8').read())
+          payload['token'] = os.environ['MAILER_TOKEN']
+          body = json.dumps(payload).encode('utf-8')
+          request = urllib.request.Request(
+              os.environ['MAILER_WEBHOOK_URL'],
+              data=body,
+              headers={'Content-Type': 'application/json'},
+              method='POST',
+          )
+          with urllib.request.urlopen(request, timeout=30) as response:
+              print(response.read().decode('utf-8'))
+          PY
+
+      - name: Send notification through ntfy
+        if: ${{ secrets.NTFY_TOPIC != '' }}
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          payload = json.loads(open('dist/data/mail.json', encoding='utf-8').read())
+          topic = os.environ['NTFY_TOPIC']
+          request = urllib.request.Request(
+              f'https://ntfy.sh/{topic}',
+              data=payload['notification_body'].encode('utf-8'),
+              headers={
+                  'Title': payload['notification_title'],
+                  'Priority': 'default',
+                  'Tags': 'newspaper,chart_with_upwards_trend,laptop',
+              },
+              method='POST',
+          )
+          with urllib.request.urlopen(request, timeout=30) as response:
+              print(response.status)
+          PY
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
