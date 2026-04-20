@@ -3,7 +3,8 @@ name: Daily Brief
 on:
   workflow_dispatch:
   schedule:
-    - cron: '5 12 * * *'
+    - cron: '5 8 * * *'
+      timezone: 'America/Indiana/Indianapolis'
 
 permissions:
   contents: read
@@ -17,6 +18,10 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      MAILER_WEBHOOK_URL: ${{ secrets.MAILER_WEBHOOK_URL }}
+      MAILER_TOKEN: ${{ secrets.MAILER_TOKEN }}
+      NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
 
     steps:
       - name: Check out repository
@@ -34,10 +39,7 @@ jobs:
         run: python scripts/build_digest.py --feeds scripts/feeds.json --public public --out dist
 
       - name: Send email through Google Apps Script
-        if: ${{ secrets.MAILER_WEBHOOK_URL != '' && secrets.MAILER_TOKEN != '' }}
-        env:
-          MAILER_WEBHOOK_URL: ${{ secrets.MAILER_WEBHOOK_URL }}
-          MAILER_TOKEN: ${{ secrets.MAILER_TOKEN }}
+        if: ${{ env.MAILER_WEBHOOK_URL != '' && env.MAILER_TOKEN != '' }}
         run: |
           python - <<'PY'
           import json
@@ -58,9 +60,7 @@ jobs:
           PY
 
       - name: Send notification through ntfy
-        if: ${{ secrets.NTFY_TOPIC != '' }}
-        env:
-          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        if: ${{ env.NTFY_TOPIC != '' }}
         run: |
           python - <<'PY'
           import json
